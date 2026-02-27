@@ -1,0 +1,80 @@
+@use '../abstract/variable' as *;
+@use '../components/base' as *;
+
+.logo-header {
+    width: 100px;
+    height: auto;
+
+}
+
+header {
+    background-color: black;
+}
+
+
+body.menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
+
+.navbar {
+
+    // background-color: black;
+    .navbar-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        margin: 0 15px;
+    }
+
+    p {
+        color: white;
+    }
+.nav-logo img { 
+    width: 220px; 
+    display: inline-block; 
+}
+    .nav-menu {
+        position: fixed;
+        top: 100px;
+        left: 0;
+        right: 0;
+        background-color: black;
+        list-style: none;
+        padding: 0;
+        height: 100vh;
+        z-index: 2;
+        opacity: 0.89;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transform: translateY(-270%);
+        transition: all 0.4s ease;
+
+        &.show {
+            transform: translateY(-0);
+        }
+
+        .nav-item {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: center;
+
+            &:hover {
+                width: 100%;
+            }
+        }
+    }
+
+    a {
+        font-size: 1.5rem;
+    }
+
+    .nav-button {
+        cursor: pointer;
+        width: 25px;
+    }
+}

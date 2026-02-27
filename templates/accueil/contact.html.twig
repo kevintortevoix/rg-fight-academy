@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact
+{% endblock %}
+
+{% block body %}
+
+
+	<h1>Contact</h1>
+	<section class="contact-section">
+    <div class="contact-container">
+
+        <h2>Vous souhaitez nous écrire ?</h2>
+
+        <form class="contact-form">
+
+            <label>Votre nom et prénom</label>
+            <div class="name-row">
+                <input type="text" placeholder="">
+                <input type="text" placeholder="">
+            </div>
+
+            <label>Votre email</label>
+            <input type="email">
+
+            <label>Votre message</label>
+            <textarea rows="6"></textarea>
+
+            <button type="submit">Envoyer</button>
+
+        </form>
+
+    </div>
+</section>
+{% endblock %}

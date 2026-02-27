@@ -11,7 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/produit')]
+
+#[Route('/boutique')]
 final class ProduitController extends AbstractController
 {
     #[Route(name: 'app_produit_index', methods: ['GET'])]
@@ -78,4 +79,5 @@ final class ProduitController extends AbstractController
 
         return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+<section class="about">
+    <h2>Qui sommes-nous ?</h2>
+
+    <p>
+        RG Fight Academy est un projet associatif dédié à l’enseignement du Jiu-Jitsu Brésilien.
+    </p>
+
+    <p>
+        Notre mission est d’offrir un cadre structuré, sécurisé et bienveillant, accessible dès l’âge de 3 ans.
+        À travers la pratique du Jiu-Jitsu Brésilien, nous accompagnons chaque élève dans le développement de la confiance en soi,
+        de la discipline et du respect.
+    </p>
+
+    <p>
+        L’académie s’engage également à contribuer activement à la vie locale et à promouvoir une éducation sportive
+        fondée sur la sécurité, la pédagogie et des valeurs éducatives fortes.
+    </p>
+</section>
+
+
+<section class="about-card">
+    <p class="about-title">Prêt à Commencer Votre Voyage?</p>
+
+    <p>
+        Rejoignez-nous pour un cours d'essai gratuit et découvrez pourquoi le Jiu-Jitsu Brésilien
+        est l'un des arts martiaux les plus efficaces au monde.
+    </p>
+
+    <div class="about-buttons">
+        <a href="#" class="btn-dark">Réservez un Cours d'essai</a>
+        <a href="/contact" class="btn-dark">Nous Contacter</a>
+    </div>
+</section>
+
+
+<hr class="separator">
+
+
+<section class="about-planning">
+    <h2>Notre Planning</h2>
+    <img src="{{ asset('images/Planning.png')}}" alt="Planning RGFA">
+    <a href="images/Planning.png" class="btn-dark">Télécharger notre planning</a>
+</section>
+
+
+<hr class="separator">
+
+
+<section class="about-dojo">
+    <h2>Notre Dojo</h2>
+    <p>Salle des Glycines <br>
+		Route de Crémieu <br>
+		38280 Janneyrias <br>
+	</p>
+    <img src="{{ asset('images/map.png')}}" alt="Google Maps">
+</section>
+
+{% endblock %}
