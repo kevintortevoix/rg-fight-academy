@@ -3,63 +3,39 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
-class Utilisateur
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $nom = null;
-
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $passwordHash = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $role = null;
+    /**
+     * @var list<string> The user roles
+     */
+    #[ORM\Column]
+    private array $roles = [];
 
     /**
-     * @var Collection<int, Panier>
+     * @var string The hashed password
      */
-    #[ORM\OneToMany(targetEntity: Panier::class, mappedBy: 'utilisateur')]
-    private Collection $paniers;
-
-    /**
-     * @var Collection<int, Commande>
-     */
-    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'utilisateur')]
-    private Collection $commandes;
-
-    public function __construct()
-    {
-        $this->paniers = new ArrayCollection();
-        $this->commandes = new ArrayCollection();
-    }
+    #[ORM\Column]
+    private ?string $password = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): static
-    {
-        $this->nom = $nom;
-
-        return $this;
     }
 
     public function getEmail(): ?string
@@ -74,87 +50,61 @@ class Utilisateur
         return $this;
     }
 
-    public function getPasswordHash(): ?string
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
     {
-        return $this->passwordHash;
+        return (string) $this->email;
     }
 
-    public function setPasswordHash(string $passwordHash): static
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): array
     {
-        $this->passwordHash = $passwordHash;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
 
-        return $this;
+        return array_unique($roles);
     }
 
-    public function getRole(): ?string
+    /**
+     * @param list<string> $roles
+     */
+    public function setRoles(array $roles): static
     {
-        return $this->role;
-    }
-
-    public function setRole(string $role): static
-    {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Panier>
+     * @see PasswordAuthenticatedUserInterface
      */
-    public function getPaniers(): Collection
+    public function getPassword(): ?string
     {
-        return $this->paniers;
+        return $this->password;
     }
 
-    public function addPanier(Panier $panier): static
+    public function setPassword(string $password): static
     {
-        if (!$this->paniers->contains($panier)) {
-            $this->paniers->add($panier);
-            $panier->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removePanier(Panier $panier): static
-    {
-        if ($this->paniers->removeElement($panier)) {
-            // set the owning side to null (unless already changed)
-            if ($panier->getUtilisateur() === $this) {
-                $panier->setUtilisateur(null);
-            }
-        }
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Commande>
+     * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
      */
-    public function getCommandes(): Collection
+    public function __serialize(): array
     {
-        return $this->commandes;
-    }
+        $data = (array) $this;
+        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
 
-    public function addCommande(Commande $commande): static
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setUtilisateur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commande $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getUtilisateur() === $this) {
-                $commande->setUtilisateur(null);
-            }
-        }
-
-        return $this;
+        return $data;
     }
 }

@@ -18,6 +18,10 @@ class Categorie
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    public function __toString(): string
+{
+    return $this->nom ?? '';
+}
     /**
      * @var Collection<int, Produit>
      */
