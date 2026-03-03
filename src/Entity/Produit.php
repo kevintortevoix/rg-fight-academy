@@ -32,6 +32,8 @@ class Produit
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $image = null;
     /**
      * @var Collection<int, PanierProduit>
      */
@@ -115,6 +117,16 @@ class Produit
         return $this;
     }
 
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+        return $this;
+    }
     /**
      * @return Collection<int, PanierProduit>
      */

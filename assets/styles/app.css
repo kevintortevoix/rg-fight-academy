@@ -1,8 +1,16 @@
 body {
-    background-color: #FFFFFF;
+    background-color: #aeacac;
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
+}
+
+.log {
+    color: black;
+
+    a {
+        color: black;
+    }
 }
 
 

@@ -19,6 +19,9 @@ class Panier
     #[ORM\Column]
     private ?float $total = null;
 
+    #[ORM\Column(length: 20)]
+    private ?string $statut = "actif";
+
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $createdAt = null;
 
@@ -51,6 +54,17 @@ class Panier
     {
         $this->total = $total;
 
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(string $statut): self
+    {
+        $this->statut = $statut;
         return $this;
     }
 
@@ -99,7 +113,6 @@ class Panier
     public function removePanierProduit(PanierProduit $panierProduit): static
     {
         if ($this->panierProduits->removeElement($panierProduit)) {
-            // set the owning side to null (unless already changed)
             if ($panierProduit->getPanier() === $this) {
                 $panierProduit->setPanier(null);
             }

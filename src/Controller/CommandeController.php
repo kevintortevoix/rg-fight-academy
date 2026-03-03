@@ -17,10 +17,35 @@ final class CommandeController extends AbstractController
     #[Route(name: 'app_commande_index', methods: ['GET'])]
     public function index(CommandeRepository $commandeRepository): Response
     {
+        /** @var \App\Entity\Utilisateur $utilisateur */
+        $utilisateur = $this->getUser();
+
+        if (!$utilisateur) {
+            return $this->redirectToRoute('app_login');
+        }
+
         return $this->render('commande/index.html.twig', [
-            'commandes' => $commandeRepository->findAll(),
+            'commandes' =>  $commandeRepository->findBy(['utilisateur' => $utilisateur]),
         ]);
     }
+
+
+
+    // route sur /valider en methode POST
+
+    /* 
+        Recupérer l'user connecté
+        faire les vérifications de connexions
+        vérfier le CSRF TOKEN
+        Récuperer le panier actif
+        gérer les erreurs (ex : est ce qu'il est vide ?)
+        calculer le total : donc boucler sur tous les prix des produits du panier
+
+        Créer une commande avec new Commandes(), setutilisateur, datecommande, total, statut...
+        Enregistrer en bdd
+        message de confirmation addFlash
+        rediriger vers le récapitulatif commande
+    */
 
     #[Route('/new', name: 'app_commande_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -71,7 +96,7 @@ final class CommandeController extends AbstractController
     #[Route('/{id}', name: 'app_commande_delete', methods: ['POST'])]
     public function delete(Request $request, Commande $commande, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$commande->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $commande->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($commande);
             $entityManager->flush();
         }

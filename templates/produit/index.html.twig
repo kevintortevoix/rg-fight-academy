@@ -1,20 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Boutique{% endblock %}
+{% block title %}Boutique
+{% endblock %}
 
 {% block body %}
-<h1>Boutique en ligne RG Fight Academy</h1>
+	<h1>Boutique en ligne RG Fight Academy</h1>
 
-<div class="produits">
-    {% for produit in produits %}
-        <div class="card">
-            <h3>{{ produit.nom }}</h3>
-            <p>Prix : {{ produit.prix }} €</p>
-            <a href="{{ path('app_produit_show', {'id': produit.id}) }}">
-                Voir le produit
-            </a>
-        </div>
-    {% endfor %}
-</div>
+	<div class="produits">
+		{% for produit in produits %}
+			<div class="card">
+				<img src="{{ asset('uploads/images/' ~ produit.image) }}" alt="{{ produit.nom }}">
+				<h3>{{ produit.nom }}</h3>
+				<p>Prix :
+					{{ produit.prix }}
+					€</p>
+				<a href="{{ path('panier_ajouter', {id: produit.id}) }}">
+					Ajouter au panier
+				</a>
+				<a href="{{ path('app_produit_show', {'id': produit.id}) }}">
+					Voir le produit
+				</a>
+			</div>
+		{% endfor %}
+	</div>
 
 {% endblock %}

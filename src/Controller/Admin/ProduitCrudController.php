@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
 class ProduitCrudController extends AbstractCrudController
@@ -25,6 +26,13 @@ class ProduitCrudController extends AbstractCrudController
         IntegerField::new('stock'),
         AssociationField::new('categorie'),
         TextareaField::new('description'),
+
+        TextField::new('image', 'Nom du fichier image')
+            ->onlyOnForms(),
+            
+        ImageField::new('image')
+            ->setBasePath('/uploads/images')
+            ->onlyOnIndex(),
     ];
 }
     /*
