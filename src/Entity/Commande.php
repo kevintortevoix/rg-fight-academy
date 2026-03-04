@@ -19,8 +19,13 @@ class Commande
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $dateCommande = null;
 
+
+
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
+
+    #[ORM\Column(type: 'float')]
+    private ?float $total = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     #[ORM\JoinColumn(nullable: false)]
@@ -62,6 +67,18 @@ class Commande
     public function setStatut(string $statut): static
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+     public function getTotal(): ?float
+    {
+        return $this->total;
+    }
+
+    public function setTotal(float $total): static
+    {
+        $this->total = $total;
 
         return $this;
     }
