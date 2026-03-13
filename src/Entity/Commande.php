@@ -19,8 +19,6 @@ class Commande
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTime $dateCommande = null;
 
-
-
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
@@ -47,6 +45,15 @@ class Commande
         return $this->id;
     }
 
+    public function getNomUtilisateur(): ?string
+    {
+        return $this->utilisateur ? $this->utilisateur->getNom() : null;
+    }
+
+    public function getPrenomUtilisateur(): ?string
+    {
+        return $this->utilisateur ? $this->utilisateur->getPrenom() : null;
+    }
     public function getDateCommande(): ?\DateTime
     {
         return $this->dateCommande;
@@ -71,7 +78,7 @@ class Commande
         return $this;
     }
 
-     public function getTotal(): ?float
+    public function getTotal(): ?float
     {
         return $this->total;
     }

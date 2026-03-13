@@ -365,6 +365,19 @@
             "./assets/styles/app.scss"
         ]
     },
+    "tattali/calendar-bundle": {
+        "version": "8.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "8.1",
+            "ref": "5cd0d27ab839ae430c3ae78df7534fa492b713f5"
+        },
+        "files": [
+            "./config/packages/calendar.yaml",
+            "./config/routes/calendar.yaml"
+        ]
+    },
     "twig/extra-bundle": {
         "version": "v3.23.0"
     }

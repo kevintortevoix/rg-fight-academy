@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+<h1>Bonjour {{ user.prenom }} {{user.nom}}</h1>
+
+<a class="btn-dark" href="/commande">Mes commandes</a>
+
+{% if is_granted('ROLE_ADMIN') %}
+<a class="btn-dark" href="/admin">Espace admin</a>
+{% endif %}
+
+<a class="btn-dark" href="/logout">Déconnexion</a>
+{% endblock %}

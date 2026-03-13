@@ -10,7 +10,6 @@
 		<link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
 		{% block javascripts %}
 
-
 			{% block importmap %}
 
 				{{ importmap('app') }}
@@ -22,22 +21,33 @@
 			<nav class="navbar" id="main-navbar">
 				<div class="navbar-container">
 					<div class="nav-button-basket">
-					<a href=""></a><img src="{{ asset('uploads/images/basket-shopping-solid.svg') }}" alt="">
+						<a href="/panier">
+							<img src="{{ asset('uploads/images/basket-shopping-solid.svg') }}" alt="Logo Panier">
+						</a>
 					</div>
-					<a href="" class="nav-logo"><img src="{{ asset('uploads/images/Logo Noir RG Fight Academy.jpg') }}" alt="Logo RG Fight Academy"></a>
+					<a href="/" class="nav-logo"><img src="{{ asset('uploads/images/Logo Noir RG Fight Academy.jpg') }}" alt="Logo RG Fight Academy"></a>
 					<div class="nav-button">
-						<img src="{{ asset('uploads/images/bars-solid.svg') }}" alt="">
+						<img src="{{ asset('uploads/images/bars-solid.svg') }}" alt="Logo Menu Burger">
 					</div>
 
 					<ul class="nav-menu">
-					<li class="nav-item active">
-							<a href='/register'>S'inscrire</a>
-						</li>
+						{% if app.user %}
+							<li class="nav-item">
+								<a href="/profil">Mon Profil</a>
+							</li>
+							<li class="nav-item">
+								<a href="/logout">Se déconnecter</a>
+							</li>
+						{% else %}
+							<li class="nav-item">
+								<a href="/register">S'inscrire</a>
+							</li>
+							<li class="nav-item">
+								<a href="/login">Se connecter</a>
+							</li>
+						{% endif %}
 						<li class="nav-item active">
-							<a href="/login">Se Connecter</a>
-						</li>
-						<li class="nav-item active">
-							<a href="/accueil">Accueil</a>
+							<a href="/">Accueil</a>
 						</li>
 						<li class="nav-item">
 							<a href="/cours">Cours</a>
@@ -55,12 +65,13 @@
 				</div>
 			</nav>
 		</header>
+		<div class="header_img"><img src="{{ asset('uploads/images/header-photo.jpg') }}" alt=""></div>
 		{% block body %}{% endblock %}
 	</body>
 	<footer>
 		<img src="{{ asset('uploads/images/Logo Blanc RG Fight Academy.jpg')}}" alt="Logo RG Fight Academy" class="logo-footer">
 		<div>
-			<a href="{{ asset("/accueil") }}">Accueil</a>
+			<a href="{{ asset("/") }}">Accueil</a>
 		</div>
 		<div>
 			<a href="{{ asset("/cours") }}">Cours</a>

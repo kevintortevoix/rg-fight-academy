@@ -53,6 +53,8 @@ final class PanierController extends AbstractController
         if (!$panier) {
             $panier = new Panier();
             $panier->setUtilisateur($utilisateur);
+            $panier->setTotal(0);
+            $panier->setCreatedAt(new \DateTime());
             $em->persist($panier);
         }
         // On parcourt toutes les lignes du panier (PanierProduit).
@@ -79,33 +81,33 @@ final class PanierController extends AbstractController
         return $this->redirectToRoute('app_panier_index');
     }
 
-    // #[Route('/new', name: 'app_panier_new', methods: ['GET', 'POST'])]
-    // public function new(Request $request, EntityManagerInterface $entityManager): Response
-    // {
-    //     $panier = new Panier();
-    //     $form = $this->createForm(PanierType::class, $panier);
-    //     $form->handleRequest($request);
+    #[Route('/new', name: 'app_panier_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $panier = new Panier();
+        $form = $this->createForm(PanierType::class, $panier);
+        $form->handleRequest($request);
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->persist($panier);
-    //         $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($panier);
+            $entityManager->flush();
 
-    //         return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
-    //     }
+            return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
+        }
 
-    //     return $this->render('panier/new.html.twig', [
-    //         'panier' => $panier,
-    //         'form' => $form,
-    //     ]);
-    // }
+        return $this->render('panier/new.html.twig', [
+            'panier' => $panier,
+            'form' => $form,
+        ]);
+    }
 
-    // #[Route('/{id}', name: 'app_panier_show', methods: ['GET'])]
-    // public function show(Panier $panier): Response
-    // {
-    //     return $this->render('panier/show.html.twig', [
-    //         'panier' => $panier,
-    //     ]);
-    // }
+    #[Route('/{id}', name: 'app_panier_show', methods: ['GET'])]
+    public function show(Panier $panier): Response
+    {
+        return $this->render('panier/show.html.twig', [
+            'panier' => $panier,
+        ]);
+    }
 
     // #[Route('/{id}/edit', name: 'app_panier_edit', methods: ['GET', 'POST'])]
     // public function edit(Request $request, Panier $panier, EntityManagerInterface $entityManager): Response

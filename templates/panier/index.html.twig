@@ -1,22 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panier index{% endblock %}
+{% block title %}Panier index
+{% endblock %}
 
 {% block body %}
-    <h1>Panier index</h1>
+	<h1>Panier index</h1>
 
-    <h1>Mon panier</h1>
+	<h1>Mon panier</h1>
 
-{% if panier and panier.panierProduits|length > 0 %}
-    {% for ligne in panier.panierProduits %}
-        <div>
-            {{ ligne.produit.nom }} -
-            Quantité : {{ ligne.quantite }}
-        </div>
-    {% endfor %}
-{% else %}
-    <p>Votre panier est vide</p>
-{% endif %}
+	{% if panier and panier.panierProduits|length > 0 %}
 
-    <a href="{{ path('app_panier_new') }}">Create new</a>
+		{% set total = 0 %}
+
+		<table class="panier-table">
+			<thead>
+				<tr>
+					<th>Image</th>
+					<th>Produit</th>
+					<th>Prix</th>
+					<th>Quantité</th>
+					<th>Total ligne</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for ligne in panier.panierProduits %}
+					{% set totalLigne = ligne.quantite * ligne.produit.prix %}
+					{% set total = total + totalLigne %}
+					<tr>
+						<td>
+							<img src="{{ asset('uploads/images/' ~ ligne.produit.image) }}" alt="{{ ligne.produit.nom }}" width="100" style="border-radius:8px;">
+						</td>
+						<td>{{ ligne.produit.nom }}</td>
+						<td>{{ ligne.produit.prix }}€</td>
+						<td>{{ ligne.quantite }}</td>
+						<td>{{ totalLigne }}€</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="5" style="text-align:center; font-weight:bold;">Total du panier</td>
+					<td style="font-weight:bold;">{{ total }}
+						€</td>
+				</tr>
+			</tfoot>
+		</table>
+		<a class="btn-dark" href="/boutique">Continuer mes achats</a>
+		<form action="{{ path('valider') }}" method="POST" style="margin-top:20px;">
+			<input type="hidden" name="_token" value="{{ csrf_token('valider_commande') }}">
+			<button type="submit" class="btn-dark">Passer la commande</button>
+		</form>
+	{% else %}
+		<p>Votre panier est vide</p>
+	{% endif %}
 {% endblock %}

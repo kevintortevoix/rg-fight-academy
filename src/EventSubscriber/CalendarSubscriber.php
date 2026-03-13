@@ -1,0 +1,72 @@
+<?php
+
+namespace App\EventSubscriber;
+
+use App\Repository\CoursRepository;
+use CalendarBundle\Entity\Event;
+use CalendarBundle\Event\SetDataEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+class CalendarSubscriber implements EventSubscriberInterface
+{
+    public function __construct(private CoursRepository $coursRepository) {}
+
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            SetDataEvent::class => 'onCalendarSetData',
+        ];
+    }
+
+    public function onCalendarSetData(SetDataEvent $setDataEvent): void
+    {
+        $cours = $this->coursRepository->findAll();
+
+        $jours = [
+            'Lundi'    => 'Monday',
+            'Mardi'    => 'Tuesday',
+            'Mercredi' => 'Wednesday',
+            'Jeudi'    => 'Thursday',
+            'Vendredi' => 'Friday',
+            'Samedi'   => 'Saturday',
+            'Dimanche' => 'Sunday',
+        ];
+
+        foreach ($cours as $cours) {
+            $jourEn = $jours[$cours->getJour()];
+
+            $debut = new \DateTime($jourEn . ' this week');
+            $debut->setTime(
+                $cours->getHeureDebut()->format('H'),
+                $cours->getHeureDebut()->format('i')
+            );
+
+            $fin = new \DateTime($jourEn . ' this week');
+            $fin->setTime(
+                $cours->getHeureFin()->format('H'),
+                $cours->getHeureFin()->format('i')
+            );
+
+
+            $couleurs = [
+            "Grappling Adultes"       => '#22c55e',
+            "Préparation Physique"    => '#f4d03f',
+            "JJB Adultes"             => '#16a34a',
+            "JJB Ados 9-12 ans"       => '#a855f7',
+            "JJB Kid's 6-9 ans"       => '#3b82f6',
+            "JJB Baby's 3-6 ans"      => '#8b5cf6',
+            
+];
+
+            $couleur = $couleurs[$cours->getNom()] ?? '#333333';
+
+            $event = new Event($cours->getNom(), $debut, $fin);
+            $event->addOption('url', '/reservation/' . $cours->getId());
+            $event->addOption('backgroundColor', $couleur);
+            $event->addOption('borderColor', $couleur);
+            $event->addOption('textColor', '#ffffff');
+
+            $setDataEvent->addEvent($event);
+        }
+    }
+}

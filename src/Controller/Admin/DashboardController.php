@@ -6,36 +6,41 @@ use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use Symfony\Component\HttpFoundation\Response;
-use App\Entity\Produit;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Entity\Cours;
+use App\Entity\Reservation;
 
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
-public function index(): RedirectResponse
-{
-    $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+    public function index(): RedirectResponse
+    {
+        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
 
-    return $this->redirect(
-        $adminUrlGenerator
-            ->setController(\App\Controller\Admin\ProduitCrudController::class)
-            ->generateUrl()
-    );
-}
+        return $this->redirect(
+            $adminUrlGenerator
+                ->setController(\App\Controller\Admin\ProduitCrudController::class)
+                ->generateUrl()
+        );
+    }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Rg Fight Academy');
+            ->setTitle('RG Fight Academy');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('Produits', 'fa fa-box', Produit::class);
+        yield MenuItem::linkToDashboard('Dashboard', 'fas fa-home');
+        yield MenuItem::linkToRoute('Utilisateurs', 'fa-solid fa-users', "admin_utilisateur_index");
+        yield MenuItem::linkToRoute('Produits', 'fa-solid fa-box', "admin_produit_index");
+        yield MenuItem::linkToRoute('Catégories', 'fa-solid fa-list', "admin_categorie_index");
+        yield MenuItem::linkToRoute('Commandes', 'fas fa-shopping-cart', "admin_commande_index");
+        yield MenuItem::linkToRoute('Cours', 'fas fa-dumbbell', "admin_cours_index");
+        yield MenuItem::linkToRoute('Réservations', 'fas fa-calendar', "admin_reservation_index");
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }

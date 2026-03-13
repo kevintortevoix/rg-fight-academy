@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation confirmée{% endblock %}
+
+{% block body %}
+    <main class="confirmation-container">
+        <h1>✅ Réservation confirmée !</h1>
+        <p>Votre réservation pour le cours <strong>{{ cours.nom }}</strong> a bien été enregistrée.</p>
+        <p>📅 {{ cours.jour }} de {{ cours.heureDebut|date('H:i') }} à {{ cours.heureFin|date('H:i') }}</p>
+        <a href="{{ path('app_cours') }}" class="btn-dark">Retour aux cours</a>
+    </main>
+{% endblock %}

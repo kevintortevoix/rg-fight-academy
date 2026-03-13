@@ -1,31 +1,41 @@
 import './stimulus_bootstrap.js';
-/*
- * Welcome to your app's main JavaScript file!
- *
- * This file will be included onto the page via the importmap() Twig function,
- * which should already be in your base.html.twig.
- */
 import './styles/app.css';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
 window.onload = () => {
+    // Récupération du bouton du menu burger et de la liste du menu
     const navButton = document.querySelector("#main-navbar .nav-button");
     const navMenu = document.querySelector("#main-navbar .nav-menu");
 
-    // Si on clique sur le bouton on ouvre le menu
+    // -------------------------------------------------
+    // Ouvrir / fermer le menu au clic sur le bouton
+    // -------------------------------------------------
     navButton.addEventListener("click", function(event){
-        // On stoppe la propagation
-        event.stopPropagation();
+        event.stopPropagation(); // Empêche la propagation pour que le document n'écoute pas ce clic
 
-        // On ajoute la classe show ou on l'enlève
+        // Toggle la classe 'show' sur le menu pour l'afficher ou le cacher
         navMenu.classList.toggle("show");
+
+        // Toggle la classe 'menu-open' sur le body pour bloquer le scroll
         document.body.classList.toggle("menu-open");
     });
 
-    // Si on clique n'importe ou le menu se ferme
+    // -------------------------------------------------
+    // Fermer le menu si on clique ailleurs sur la page
+    // -------------------------------------------------
     document.addEventListener("click", function(){
-        navButton.classList.remove("show");
-        document.body.classList.remove("menu-open");
-    })
+        navMenu.classList.remove("show");          // On cache le menu
+        document.body.classList.remove("menu-open"); // On réactive le scroll
+    });
+
+    // -------------------------------------------------
+    // Fermer le menu si on clique sur un lien du menu
+    // -------------------------------------------------
+    navMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+            navMenu.classList.remove("show");          // On cache le menu
+            document.body.classList.remove("menu-open"); // On réactive le scroll
+        });
+    });
 }

@@ -79,4 +79,9 @@ class CommandeProduit
 
         return $this;
     }
+
+    public function __toString(): string
+{
+    return $this->produit->getNom() . ' x ' . $this->quantite;
+}
 }

@@ -33,7 +33,7 @@
     </p>
 
     <div class="about-buttons">
-        <a href="#" class="btn-dark">Réservez un Cours d'essai</a>
+        <a href="/contact" class="btn-dark">Réservez un Cours d'essai</a>
         <a href="/contact" class="btn-dark">Nous Contacter</a>
     </div>
 </section>
@@ -44,8 +44,10 @@
 
 <section class="about-planning">
     <h2>Notre Planning</h2>
-    <img src="{{ asset('images/Planning.png')}}" alt="Planning RGFA">
-    <a href="images/Planning.png" class="btn-dark">Télécharger notre planning</a>
+    <p>Pour réservez votre cours, cliquez sur le cours qui vous interesse !</p>
+    <div id="calendar-holder"></div>
+
+
 </section>
 
 
@@ -58,7 +60,42 @@
 		Route de Crémieu <br>
 		38280 Janneyrias <br>
 	</p>
-    <img src="{{ asset('images/map.png')}}" alt="Google Maps">
+    <img src="{{ asset('uploads/images/map.png')}}" alt="Google Maps">
 </section>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/locales/fr.global.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            new FullCalendar.Calendar(document.getElementById('calendar-holder'), {
+                initialView: 'timeGridWeek',
+                locale: 'fr',
+                timeZone: 'Europe/Paris', 
+                headerToolbar: {
+                    left: '',
+                    center: 'title',
+                    right: '',
+                },
+                slotMinTime: '12:00:00',
+                slotMaxTime: '21:00:00',
+                eventSources: [{
+                    url: '/fc-load-events',
+                    method: 'POST',
+                    extraParams: { filters: JSON.stringify({}) }
+                }],
+                eventClick: function(info) {
+                    info.jsEvent.preventDefault();
+                    {% if app.user %}
+                        window.location.href = info.event.url;
+                    {% else %}
+                        window.location.href = '{{ path("app_login") }}';
+                    {% endif %}
+                }
+            }).render();
+        });
+    </script>
 {% endblock %}

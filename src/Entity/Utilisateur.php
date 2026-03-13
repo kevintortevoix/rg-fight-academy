@@ -24,6 +24,11 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $prenom = null;
     /**
      * @var list<string> The user roles
      */
@@ -39,9 +44,16 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Panier::class)]
     private Collection $paniers;
 
+    /**
+     * @var Collection<int, Reservation>
+     */
+    #[ORM\OneToMany(targetEntity: Reservation::class, mappedBy: 'utilisateur')]
+    private Collection $reservations;
+
     public function __construct()
     {
         $this->paniers = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -57,6 +69,30 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): static
+    {
+        $this->prenom = $prenom;
 
         return $this;
     }
@@ -100,7 +136,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(?string $password): static
     {
         $this->password = $password;
 
@@ -150,5 +186,35 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
             }
         }
         return null;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getUtilisateur() === $this) {
+                $reservation->setUtilisateur(null);
+            }
+        }
+
+        return $this;
     }
 }
