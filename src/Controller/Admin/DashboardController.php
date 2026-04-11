@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Entity\Contact;
 use App\Entity\Cours;
 use App\Entity\Reservation;
 
@@ -35,12 +36,15 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fas fa-home');
+        yield MenuItem::linkToRoute('Messages', 'fas fa-envelope', "admin_contact_index");
         yield MenuItem::linkToRoute('Utilisateurs', 'fa-solid fa-users', "admin_utilisateur_index");
         yield MenuItem::linkToRoute('Produits', 'fa-solid fa-box', "admin_produit_index");
         yield MenuItem::linkToRoute('Catégories', 'fa-solid fa-list', "admin_categorie_index");
         yield MenuItem::linkToRoute('Commandes', 'fas fa-shopping-cart', "admin_commande_index");
         yield MenuItem::linkToRoute('Cours', 'fas fa-dumbbell', "admin_cours_index");
         yield MenuItem::linkToRoute('Réservations', 'fas fa-calendar', "admin_reservation_index");
+        yield MenuItem::linkToRoute('Retour au site', 'fas fa-home', "app_accueil");
+        
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }

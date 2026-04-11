@@ -4,13 +4,14 @@
 .logo-header {
     width: 100px;
     height: auto;
-
 }
 
 header {
     background-color: black;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
-
 
 body.menu-open {
     overflow: hidden;
@@ -19,8 +20,6 @@ body.menu-open {
 }
 
 .navbar {
-
-    // background-color: black;
     .navbar-container {
         display: flex;
         flex-direction: row;
@@ -32,17 +31,19 @@ body.menu-open {
 
     .nav-button-basket img {
         width: 25px;
-        color:aliceblue;
+        color: aliceblue;
         cursor: pointer;
     }
 
     p {
         color: white;
     }
-.nav-logo img { 
-    width: 150px; 
-    display: inline-block; 
-}
+
+    .nav-logo img {
+        width: 150px;
+        display: inline-block;
+    }
+
     .nav-menu {
         position: fixed;
         top: 100px;
@@ -83,5 +84,10 @@ body.menu-open {
         cursor: pointer;
         width: 25px;
     }
-    
+}
+
+.header_img img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
 }

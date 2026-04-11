@@ -5,41 +5,52 @@
 
 {% block body %}
 
-
 	<h1>Nos Tarifs</h1>
 
-	<section class="tarif">
-	<div class="tarif-card">
-	<p>🐣 Baby’s (3 – 6 ans)</p>
-	<p>200 € (1 cours par semaine)</p>
-	</div>
+	<section class="tarifs-grid">
+
+		<div class="tarif-card" id="tarif-baby">
+			<p class="tarif-titre">Baby's</p>
+			<p class="tarif-age">3 – 6 ans</p>
+			<p class="tarif-prix">200 €</p>
+			<p class="tarif-detail">1 cours par semaine</p>
+		</div>
+
+		<div class="tarif-card" id="tarif-kids">
+			<p class="tarif-titre">Kid's</p>
+			<p class="tarif-age">6 – 15 ans</p>
+			<p class="tarif-prix">280 €</p>
+			<p class="tarif-detail">2 cours par semaine</p>
+		</div>
+
+		<div class="tarif-card" id="tarif-adultes">
+			<p class="tarif-titre">Adultes (JJB + Grappling)</p>
+			<p class="tarif-age"> Tous niveaux </p>
+			<p class="tarif-prix">350 €</p>
+			<p class="tarif-detail">4 cours par semaine</p>
+		</div>
+
+		<div class="tarif-card" id="tarif-physique">
+			<p class="tarif-titre">Préparation Physique</p>
+			<p class="tarif-age"> Tous niveaux</p>
+			<p class="tarif-prix">350 €</p>
+			<p class="tarif-detail">4 cours par semaine</p>
+		</div>
+
+		<div class="tarif-card" id="tarif-jjb">
+			<p class="tarif-titre">JJB</p>
+			<p class="tarif-age"> Tous niveaux</p>
+			<p class="tarif-prix">200 €</p>
+			<p class="tarif-detail">2 cours par semaine</p>
+		</div>
+
+		<div class="tarif-card" id="tarif-grappling">
+			<p class="tarif-titre">Grappling</p>
+			<p class="tarif-age"> Tous niveaux</p>
+			<p class="tarif-prix">200 €</p>
+			<p class="tarif-detail">2 cours par semaine</p>
+		</div>
+
 	</section>
 
-	<section class="tarif">
-	<div class="tarif-card">
-	<p>🥋 Kid’s (6 – 9 ans)</p>
-	<p>280 € (2 cours par semaine)</p>
-	</div>
-	</section>
-
-	<section class="tarif"> 
-	<div class="tarif-card">
-	<p>🔥 Ado (9 – 13 ans)</p>
-	<p>280 € (2 cours par semaine)</p>
-	</div>
-	</section>
-
-	<section class="tarif">
-	<div class="tarif-card">
-	<p>💪 Adultes</p>
-	<p>350 € (4 cours par semaine)</p>
-	</div>
-	</section>
-
-	<section class="tarif">
-	<div class="tarif-card">
-	<p>🏋️ Préparation Physique</p>
-	<p>350 € (4 cours par semaine)</p>
-	</div>
-	</section>
 {% endblock %}

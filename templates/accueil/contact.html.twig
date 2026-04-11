@@ -1,35 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact
-{% endblock %}
+{% block title %}Contact{% endblock %}
 
 {% block body %}
 
-
-	<h1>Contact</h1>
-	<section class="contact-section">
+<h1>Contact</h1>
+<section class="contact-section">
     <div class="contact-container">
 
         <h2>Vous souhaitez nous écrire ?</h2>
 
-        <form class="contact-form">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
 
-            <label>Votre nom et prénom</label>
-            <div class="name-row">
-                <input type="text" placeholder="">
-                <input type="text" placeholder="">
-            </div>
-
-            <label>Votre email</label>
-            <input type="email">
-
-            <label>Votre message</label>
-            <textarea rows="6"></textarea>
-
+        {{ form_start(form, {'attr': {'class': 'contact-form'}}) }}
+            {{ form_row(form.nom) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.message) }}
             <button type="submit">Envoyer</button>
-
-        </form>
+        {{ form_end(form) }}
 
     </div>
 </section>
+
 {% endblock %}

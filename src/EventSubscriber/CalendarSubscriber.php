@@ -49,14 +49,13 @@ class CalendarSubscriber implements EventSubscriberInterface
 
 
             $couleurs = [
-            "Grappling Adultes"       => '#22c55e',
-            "Préparation Physique"    => '#f4d03f',
-            "JJB Adultes"             => '#16a34a',
-            "JJB Ados 9-12 ans"       => '#a855f7',
-            "JJB Kid's 6-9 ans"       => '#3b82f6',
-            "JJB Baby's 3-6 ans"      => '#8b5cf6',
-            
-];
+                "JJB Baby's 3-6 ans"    => '#d1d5db',  // blanche — mais invisible sur fond clair !
+                "JJB Kid's 6-15 ans"    => '#3b82f6',  // bleue
+                "Grappling Adultes"     => '#9333ea',  // violette
+                "Préparation Physique"  => '#92400e',  // marron
+                "JJB Adultes"           => '#1a1a1a',  // noire
+
+            ];
 
             $couleur = $couleurs[$cours->getNom()] ?? '#333333';
 

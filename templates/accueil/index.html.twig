@@ -1,101 +1,111 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Accueil
+{% endblock %}
 
 {% block body %}
 
-<section class="about">
-    <h2>Qui sommes-nous ?</h2>
+	<section class="about">
+		<h2>Qui sommes-nous ?</h2>
 
-    <p>
-        RG Fight Academy est un projet associatif dédié à l’enseignement du Jiu-Jitsu Brésilien.
-    </p>
+		<p>
+			RG Fight Academy est un projet associatif dédié à l’enseignement du Jiu-Jitsu Brésilien.
+		</p>
 
-    <p>
-        Notre mission est d’offrir un cadre structuré, sécurisé et bienveillant, accessible dès l’âge de 3 ans.
-        À travers la pratique du Jiu-Jitsu Brésilien, nous accompagnons chaque élève dans le développement de la confiance en soi,
-        de la discipline et du respect.
-    </p>
+		<p>
+			Notre mission est d’offrir un cadre structuré, sécurisé et bienveillant, accessible dès l’âge de 3 ans.
+						        À travers la pratique du Jiu-Jitsu Brésilien, nous accompagnons chaque élève dans le développement de la confiance en soi,
+						        de la discipline et du respect.
+		</p>
 
-    <p>
-        L’académie s’engage également à contribuer activement à la vie locale et à promouvoir une éducation sportive
-        fondée sur la sécurité, la pédagogie et des valeurs éducatives fortes.
-    </p>
-</section>
-
-
-<section class="about-card">
-    <p class="about-title">Prêt à Commencer Votre Voyage?</p>
-
-    <p>
-        Rejoignez-nous pour un cours d'essai gratuit et découvrez pourquoi le Jiu-Jitsu Brésilien
-        est l'un des arts martiaux les plus efficaces au monde.
-    </p>
-
-    <div class="about-buttons">
-        <a href="/contact" class="btn-dark">Réservez un Cours d'essai</a>
-        <a href="/contact" class="btn-dark">Nous Contacter</a>
-    </div>
-</section>
+		<p>
+			L’académie s’engage également à contribuer activement à la vie locale et à promouvoir une éducation sportive
+						        fondée sur la sécurité, la pédagogie et des valeurs éducatives fortes.
+		</p>
+	</section>
 
 
-<hr class="separator">
+	<section class="about-card">
+		<p class="about-title">Prêt à Commencer Votre Voyage?</p>
+
+		<p>
+			Rejoignez-nous pour un cours d'essai gratuit et découvrez pourquoi le Jiu-Jitsu Brésilien
+						        est l'un des arts martiaux les plus efficaces au monde.
+		</p>
+
+		<div class="about-buttons">
+			<a href="#planning" class="btn-dark">Réservez un Cours d'essai</a>
+			<a href="/contact" class="btn-dark">Nous Contacter</a>
+		</div>
+	</section>
 
 
-<section class="about-planning">
-    <h2>Notre Planning</h2>
-    <p>Pour réservez votre cours, cliquez sur le cours qui vous interesse !</p>
-    <div id="calendar-holder"></div>
+	<hr class="separator">
 
 
-</section>
+	<section class="about-planning" id="planning">
+		<h2>Notre Planning</h2>
+		<p>Pour réservez votre cours, cliquez sur le cours qui vous interesse !</p>
+		<div id="calendar-holder"></div>
 
 
-<hr class="separator">
+	</section>
 
 
-<section class="about-dojo">
-    <h2>Notre Dojo</h2>
-    <p>Salle des Glycines <br>
-		Route de Crémieu <br>
-		38280 Janneyrias <br>
-	</p>
-    <img src="{{ asset('uploads/images/map.png')}}" alt="Google Maps">
-</section>
+	<hr class="separator">
+
+
+	<section class="about-dojo">
+		<h2>Notre Dojo</h2>
+		<p>Salle des Glycines
+			<br>
+			Route de Crémieu
+			<br>
+			38280 Janneyrias
+			<br>
+		</p>
+		<img src="{{ asset('uploads/images/map.png')}}" alt="Google Maps">
+	</section>
 
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/locales/fr.global.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            new FullCalendar.Calendar(document.getElementById('calendar-holder'), {
-                initialView: 'timeGridWeek',
-                locale: 'fr',
-                timeZone: 'Europe/Paris', 
-                headerToolbar: {
-                    left: '',
-                    center: 'title',
-                    right: '',
-                },
-                slotMinTime: '12:00:00',
-                slotMaxTime: '21:00:00',
-                eventSources: [{
-                    url: '/fc-load-events',
-                    method: 'POST',
-                    extraParams: { filters: JSON.stringify({}) }
-                }],
-                eventClick: function(info) {
-                    info.jsEvent.preventDefault();
-                    {% if app.user %}
-                        window.location.href = info.event.url;
-                    {% else %}
-                        window.location.href = '{{ path("app_login") }}';
-                    {% endif %}
-                }
-            }).render();
-        });
-    </script>
+	{{ parent() }}
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/locales/fr.global.min.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+new FullCalendar.Calendar(document.getElementById('calendar-holder'), {
+initialView: window.innerWidth < 768 ? 'listWeek' : 'timeGridWeek',
+locale: 'fr',
+timeZone: 'Europe/Paris',
+headerToolbar: {
+left: '',
+center: 'title',
+right: ''
+},
+slotMinTime: '12:00:00',
+slotMaxTime: '21:00:00',
+eventSources: [
+{
+url: '/fc-load-events',
+method: 'POST',
+extraParams: {
+filters: JSON.stringify({})
+}
+}
+],
+eventClick: function (info) {
+info.jsEvent.preventDefault();{% if app.user %}if (confirm("Confirmer la réservation : " + info.event.title + " le " + info.event.start.toLocaleDateString('fr-FR') + " à " + info.event.start.toLocaleTimeString('fr-FR', {
+hour: '2-digit',
+minute: '2-digit'
+}) + " ?")) {
+window.location.href = info.event.url;
+}
+{% else %}
+window.location.href = '{{ path("app_login") }}';{% endif %}
+}
+}).render();
+});
+	</script>
 {% endblock %}

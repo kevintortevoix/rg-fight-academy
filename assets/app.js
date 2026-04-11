@@ -3,39 +3,54 @@ import './styles/app.css';
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
-window.onload = () => {
-    // Récupération du bouton du menu burger et de la liste du menu
+let documentClickHandler = null;
+
+function closeMenu(navMenu) {
+    navMenu.classList.remove("show");
+    document.body.classList.remove("menu-open");
+}
+
+function initNavbar() {
     const navButton = document.querySelector("#main-navbar .nav-button");
     const navMenu = document.querySelector("#main-navbar .nav-menu");
 
-    // -------------------------------------------------
-    // Ouvrir / fermer le menu au clic sur le bouton
-    // -------------------------------------------------
-    navButton.addEventListener("click", function(event){
-        event.stopPropagation(); // Empêche la propagation pour que le document n'écoute pas ce clic
+    if (!navButton || !navMenu) return;
 
-        // Toggle la classe 'show' sur le menu pour l'afficher ou le cacher
+    // Ferme le menu au chargement
+    closeMenu(navMenu);
+
+    // Supprime l'ancien listener sur document avant d'en créer un nouveau
+    if (documentClickHandler) {
+        document.removeEventListener("click", documentClickHandler);
+    }
+
+    // Clone pour supprimer les anciens listeners du bouton
+    const newNavButton = navButton.cloneNode(true);
+    navButton.parentNode.replaceChild(newNavButton, navButton);
+
+    // Ouvre / ferme le menu
+    newNavButton.addEventListener("click", function(event) {
+        event.stopPropagation();
         navMenu.classList.toggle("show");
-
-        // Toggle la classe 'menu-open' sur le body pour bloquer le scroll
         document.body.classList.toggle("menu-open");
     });
 
-    // -------------------------------------------------
-    // Fermer le menu si on clique ailleurs sur la page
-    // -------------------------------------------------
-    document.addEventListener("click", function(){
-        navMenu.classList.remove("show");          // On cache le menu
-        document.body.classList.remove("menu-open"); // On réactive le scroll
-    });
+    // Stocke le handler pour pouvoir le supprimer plus tard
+    documentClickHandler = function() {
+        closeMenu(navMenu);
+    };
+    document.addEventListener("click", documentClickHandler);
 
-    // -------------------------------------------------
-    // Fermer le menu si on clique sur un lien du menu
-    // -------------------------------------------------
+    // Ferme le menu au clic sur un lien
     navMenu.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-            navMenu.classList.remove("show");          // On cache le menu
-            document.body.classList.remove("menu-open"); // On réactive le scroll
+        link.addEventListener("click", function() {
+            closeMenu(navMenu);
         });
     });
+}
+
+if (typeof Turbo !== "undefined") {
+    document.addEventListener("turbo:load", initNavbar);
+} else {
+    window.addEventListener("load", initNavbar);
 }

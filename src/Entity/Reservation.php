@@ -8,6 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
 class Reservation
 {
+    // -------------------------------------------------------------------------
+    // Propriétés
+    // -------------------------------------------------------------------------
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -27,6 +31,10 @@ class Reservation
     #[ORM\JoinColumn(nullable: false)]
     private ?Cours $cours = null;
 
+    // -------------------------------------------------------------------------
+    // Getters / Setters
+    // -------------------------------------------------------------------------
+
     public function getId(): ?int
     {
         return $this->id;
@@ -40,7 +48,61 @@ class Reservation
     public function setDateReservation(\DateTimeInterface $dateReservation): static
     {
         $this->dateReservation = $dateReservation;
+
         return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(string $statut): static
+    {
+        $this->statut = $statut;
+
+        return $this;
+    }
+
+    // -------------------------------------------------------------------------
+    // Relation : Utilisateur
+    // -------------------------------------------------------------------------
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+
+    public function setUtilisateur(?Utilisateur $utilisateur): static
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    // -------------------------------------------------------------------------
+    // Relation : Cours
+    // -------------------------------------------------------------------------
+
+    public function getCours(): ?Cours
+    {
+        return $this->cours;
+    }
+
+    public function setCours(?Cours $cours): static
+    {
+        $this->cours = $cours;
+
+        return $this;
+    }
+
+    // -------------------------------------------------------------------------
+    // Méthodes métier (données dérivées du Cours)
+    // -------------------------------------------------------------------------
+
+    public function getJourCours(): ?string
+    {
+        return $this->cours?->getJour();
     }
 
     public function getHeureDebutCours(): ?string
@@ -54,60 +116,36 @@ class Reservation
     }
 
     public function getDateCours(): ?string
-{
-    if (!$this->cours) return null;
-
-    $jourCours = $this->cours->getJour();
-    $jours = [
-        'Lundi' => 'Monday',
-        'Mardi' => 'Tuesday',
-        'Mercredi' => 'Wednesday',
-        'Jeudi' => 'Thursday',
-        'Vendredi' => 'Friday',
-        'Samedi' => 'Saturday',
-        'Dimanche' => 'Sunday',
-    ];
-
-    $jourEn = $jours[$jourCours] ?? $jourCours;
-    $prochaine = new \DateTime('next ' . $jourEn);
-
-    return $jourCours . ' ' . $prochaine->format('d/m/Y');
-}
-
-    public function getJourCours(): ?string
     {
-        return $this->cours ? $this->cours->getJour() : null;
+        if (!$this->cours) {
+            return null;
+        }
+
+        $jours = [
+            'Lundi'    => 'Monday',
+            'Mardi'    => 'Tuesday',
+            'Mercredi' => 'Wednesday',
+            'Jeudi'    => 'Thursday',
+            'Vendredi' => 'Friday',
+            'Samedi'   => 'Saturday',
+            'Dimanche' => 'Sunday',
+        ];
+
+        $jourCours = $this->cours->getJour();
+        $jourEn    = $jours[$jourCours] ?? $jourCours;
+
+        $today = (new \DateTime())->setTime(0, 0);
+        $coursDate = (new \DateTime('this ' . $jourEn))->setTime(0, 0);
+
+        if ($coursDate < $today) {
+            $coursDate->modify('+1 week');
+        }
+
+        return $jourCours . ' ' . $coursDate->format('d/m/Y');
     }
 
-    public function getStatut(): ?string
+    public function getNombreParticipants(): int
     {
-        return $this->statut;
-    }
-
-
-    public function setStatut(string $statut): static
-    {
-        $this->statut = $statut;
-        return $this;
-    }
-
-    public function getUtilisateur(): ?Utilisateur
-    {
-        return $this->utilisateur;
-    }
-    public function setUtilisateur(?Utilisateur $utilisateur): static
-    {
-        $this->utilisateur = $utilisateur;
-        return $this;
-    }
-
-    public function getCours(): ?Cours
-    {
-        return $this->cours;
-    }
-    public function setCours(?Cours $cours): static
-    {
-        $this->cours = $cours;
-        return $this;
+        return $this->cours?->getReservations()->count() ?? 0;
     }
 }

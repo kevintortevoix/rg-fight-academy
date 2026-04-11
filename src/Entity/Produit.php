@@ -11,6 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 class Produit
 {
+    // -------------------------------------------------------------------------
+    // Propriétés
+    // -------------------------------------------------------------------------
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -28,29 +32,34 @@ class Produit
     #[ORM\Column]
     private ?int $stock = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     #[ORM\ManyToOne(inversedBy: 'produits')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categorie = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $image = null;
-    /**
-     * @var Collection<int, PanierProduit>
-     */
+    /** @var Collection<int, PanierProduit> */
     #[ORM\OneToMany(targetEntity: PanierProduit::class, mappedBy: 'produit')]
     private Collection $panierProduits;
 
-    /**
-     * @var Collection<int, CommandeProduit>
-     */
+    /** @var Collection<int, CommandeProduit> */
     #[ORM\OneToMany(targetEntity: CommandeProduit::class, mappedBy: 'produit')]
     private Collection $commandeProduits;
 
+    // -------------------------------------------------------------------------
+    // Constructeur
+    // -------------------------------------------------------------------------
+
     public function __construct()
     {
-        $this->panierProduits = new ArrayCollection();
+        $this->panierProduits   = new ArrayCollection();
         $this->commandeProduits = new ArrayCollection();
     }
+
+    // -------------------------------------------------------------------------
+    // Getters / Setters
+    // -------------------------------------------------------------------------
 
     public function getId(): ?int
     {
@@ -105,6 +114,18 @@ class Produit
         return $this;
     }
 
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
     public function getCategorie(): ?Categorie
     {
         return $this->categorie;
@@ -117,19 +138,11 @@ class Produit
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
+    // -------------------------------------------------------------------------
+    // Relation : PanierProduit
+    // -------------------------------------------------------------------------
 
-    public function setImage(?string $image): self
-    {
-        $this->image = $image;
-        return $this;
-    }
-    /**
-     * @return Collection<int, PanierProduit>
-     */
+    /** @return Collection<int, PanierProduit> */
     public function getPanierProduits(): Collection
     {
         return $this->panierProduits;
@@ -148,7 +161,6 @@ class Produit
     public function removePanierProduit(PanierProduit $panierProduit): static
     {
         if ($this->panierProduits->removeElement($panierProduit)) {
-            // set the owning side to null (unless already changed)
             if ($panierProduit->getProduit() === $this) {
                 $panierProduit->setProduit(null);
             }
@@ -157,9 +169,11 @@ class Produit
         return $this;
     }
 
-    /**
-     * @return Collection<int, CommandeProduit>
-     */
+    // -------------------------------------------------------------------------
+    // Relation : CommandeProduit
+    // -------------------------------------------------------------------------
+
+    /** @return Collection<int, CommandeProduit> */
     public function getCommandeProduits(): Collection
     {
         return $this->commandeProduits;
@@ -178,7 +192,6 @@ class Produit
     public function removeCommandeProduit(CommandeProduit $commandeProduit): static
     {
         if ($this->commandeProduits->removeElement($commandeProduit)) {
-            // set the owning side to null (unless already changed)
             if ($commandeProduit->getProduit() === $this) {
                 $commandeProduit->setProduit(null);
             }

@@ -10,6 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CoursRepository::class)]
 class Cours
 {
+    // -------------------------------------------------------------------------
+    // Propriétés
+    // -------------------------------------------------------------------------
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -21,25 +25,34 @@ class Cours
     #[ORM\Column(length: 20)]
     private ?string $jour = null;
 
-    #[ORM\Column(type: 'date', nullable: true)]
-    private ?\DateTimeInterface $dateDebut = null;
-
-    #[ORM\Column(type: 'date', nullable: true)]
-    private ?\DateTimeInterface $dateFin = null;
-
     #[ORM\Column(type: 'time')]
     private ?\DateTimeInterface $heureDebut = null;
 
     #[ORM\Column(type: 'time')]
     private ?\DateTimeInterface $heureFin = null;
 
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTimeInterface $dateDebut = null;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTimeInterface $dateFin = null;
+
+    /** @var Collection<int, Reservation> */
     #[ORM\OneToMany(mappedBy: 'cours', targetEntity: Reservation::class, orphanRemoval: true)]
     private Collection $reservations;
+
+    // -------------------------------------------------------------------------
+    // Constructeur
+    // -------------------------------------------------------------------------
 
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
     }
+
+    // -------------------------------------------------------------------------
+    // Getters / Setters
+    // -------------------------------------------------------------------------
 
     public function getId(): ?int
     {
@@ -50,9 +63,11 @@ class Cours
     {
         return $this->nom;
     }
+
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
         return $this;
     }
 
@@ -60,29 +75,11 @@ class Cours
     {
         return $this->jour;
     }
+
     public function setJour(string $jour): static
     {
         $this->jour = $jour;
-        return $this;
-    }
 
-    public function getDateDebut(): ?\DateTimeInterface
-    {
-        return $this->dateDebut;
-    }
-    public function setDateDebut(\DateTimeInterface $dateDebut): static
-    {
-        $this->dateDebut = $dateDebut;
-        return $this;
-    }
-
-    public function getDateFin(): ?\DateTimeInterface
-    {
-        return $this->dateFin;
-    }
-    public function setDateFin(\DateTimeInterface $dateFin): static
-    {
-        $this->dateFin = $dateFin;
         return $this;
     }
 
@@ -90,9 +87,11 @@ class Cours
     {
         return $this->heureDebut;
     }
+
     public function setHeureDebut(\DateTimeInterface $heureDebut): static
     {
         $this->heureDebut = $heureDebut;
+
         return $this;
     }
 
@@ -100,12 +99,43 @@ class Cours
     {
         return $this->heureFin;
     }
+
     public function setHeureFin(\DateTimeInterface $heureFin): static
     {
         $this->heureFin = $heureFin;
+
         return $this;
     }
 
+    public function getDateDebut(): ?\DateTimeInterface
+    {
+        return $this->dateDebut;
+    }
+
+    public function setDateDebut(?\DateTimeInterface $dateDebut): static
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->dateFin;
+    }
+
+    public function setDateFin(?\DateTimeInterface $dateFin): static
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
+    }
+
+    // -------------------------------------------------------------------------
+    // Relation : Reservation
+    // -------------------------------------------------------------------------
+
+    /** @return Collection<int, Reservation> */
     public function getReservations(): Collection
     {
         return $this->reservations;
@@ -117,6 +147,7 @@ class Cours
             $this->reservations->add($reservation);
             $reservation->setCours($this);
         }
+
         return $this;
     }
 
@@ -127,9 +158,18 @@ class Cours
                 $reservation->setCours(null);
             }
         }
+
         return $this;
     }
 
+    // -------------------------------------------------------------------------
+    // Méthodes métier
+    // -------------------------------------------------------------------------
+
+    public function getNombreReservations(): int
+    {
+        return $this->reservations->count();
+    }
 
     public function __toString(): string
     {

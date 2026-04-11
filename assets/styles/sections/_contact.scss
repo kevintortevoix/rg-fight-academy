@@ -7,13 +7,16 @@
 .contact-container {
     width: 100%;
     max-width: 700px;
+    background: #d9d9d9;
+    border: 2px solid black;
+    border-radius: 12px;
+    padding: 2rem;
 }
 
 .contact-container h2 {
     text-align: center;
     margin-bottom: 50px;
     font-weight: 500;
-    text-decoration: underline;
 }
 
 .contact-form {
@@ -38,8 +41,9 @@
     padding: 12px;
     border-radius: 10px;
     border: 2px solid black;
-    background-color: transparent;
+    background-color: white;
     font-size: 1rem;
+    margin-bottom: 10px;
 }
 
 .contact-form textarea {
@@ -52,11 +56,12 @@
     background-color: black;
     color: white;
     border: none;
+    border-radius: 8px;
     font-size: 1.2rem;
     cursor: pointer;
     transition: opacity 0.3s ease;
-}
 
-.contact-form button:hover {
-    opacity: 0.8;
+    &:hover {
+        opacity: 0.8;
+    }
 }

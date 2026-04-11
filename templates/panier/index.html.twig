@@ -48,7 +48,9 @@
 		<a class="btn-dark" href="/boutique">Continuer mes achats</a>
 		<form action="{{ path('valider') }}" method="POST" style="margin-top:20px;">
 			<input type="hidden" name="_token" value="{{ csrf_token('valider_commande') }}">
-			<button type="submit" class="btn-dark">Passer la commande</button>
+			<button type="submit" class="btn-dark" onclick="return confirm('Confirmer votre commande d\'un montant de {{ total }}€ ?')">
+				Passer la commande
+			</button>
 		</form>
 	{% else %}
 		<p>Votre panier est vide</p>

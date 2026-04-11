@@ -7,7 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class ReservationCrudController extends AbstractCrudController
@@ -28,11 +28,13 @@ class ReservationCrudController extends AbstractCrudController
             DateTimeField::new('dateReservation', 'Date de réservation')->setFormat('dd/MM/yyyy'),
 
             AssociationField::new('cours', 'Cours'),
-            TextField::new('jourCours', 'Jour du cours')->onlyOnIndex(),
-            TextField::new('dateCours', 'Date cours')->onlyOnIndex(),
+            
+            TextField::new('dateCours', 'Date du cours')->onlyOnIndex(),
 
             TextField::new('heureDebutCours', 'Heure de début')->onlyOnIndex(),
             TextField::new('heureFinCours', 'Heure de fin')->onlyOnIndex(),
+
+            IntegerField::new('nombreParticipants', 'Participants'),
             
             TextField::new('statut'),
 

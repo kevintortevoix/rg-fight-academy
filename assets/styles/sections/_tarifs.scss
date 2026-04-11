@@ -1,7 +1,35 @@
+.tarifs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+    padding: 2rem;
+}
+
 .tarif-card {
-    background-color: #D9D9D9;
-    padding: 40px;
-    border-radius: 20px;
-    max-width: 600px;
-    margin: 40px auto;
+    border: 2px solid black;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    background: #d9d9d9;
+}
+
+.tarif-titre {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.tarif-age {
+    color: gray;
+    font-size: 0.9rem;
+}
+
+.tarif-prix {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.tarif-detail {
+    font-size: 0.85rem;
+    color: gray;
 }
