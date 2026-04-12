@@ -14,12 +14,11 @@
 				<p>Prix :
 					{{ produit.prix }}
 					€</p>
-				<a class="btn-dark" href="{{ path('panier_ajouter', {id: produit.id}) }}">
-					Ajouter au panier
-				</a>
-				{# <a href="{{ path('app_produit_show', {'id': produit.id}) }}">
+				
+				<a class="btn-dark" href="{{ path('app_produit_show', {id: produit.id}) }}">
 					Voir le produit
-				</a> #}
+				</a>
+
 			</div>
 		{% endfor %}
 	</div>

@@ -33,23 +33,26 @@ final class PanierController extends AbstractController
         ]);
     }
 
-    #[Route('/ajouter/{id}', name: 'panier_ajouter')]
-    public function ajouter(Produit $produit, EntityManagerInterface $em): Response
+    #[Route('/ajouter/{id}', name: 'panier_ajouter', methods: ['POST'])]
+    public function ajouter(Produit $produit, Request $request, EntityManagerInterface $em): Response
     {
-        //  Récupère l’utilisateur actuellement connecté.
-
+        // Récupère l'utilisateur actuellement connecté.
         /** @var \App\Entity\Utilisateur $utilisateur */
         $utilisateur = $this->getUser();
 
-        // Si l’utilisateur n’est pas connecté, il est redirigé vers la page de connexion.
+        // Si l'utilisateur n'est pas connecté, il est redirigé vers la page de connexion.
         if (!$utilisateur) {
             return $this->redirectToRoute('app_login');
         }
+
+        // On récupère la taille choisie dans le formulaire
+        $taille = $request->request->get('taille');
+
         // On récupère le panier de l'utilisateur, s'il n'a pas encore de panier, panier sera null
         $panier = $utilisateur->getPanierActif();
 
-        // Si pas de panier, on crée un nouveau panier (new Panier()), 
-        // On le lie à l’utilisateur (setUtilisateur) et on le prépare à être enregistré en base (persist).
+        // Si pas de panier, on crée un nouveau panier (new Panier()),
+        // On le lie à l'utilisateur (setUtilisateur) et on le prépare à être enregistré en base (persist).
         if (!$panier) {
             $panier = new Panier();
             $panier->setUtilisateur($utilisateur);
@@ -57,23 +60,27 @@ final class PanierController extends AbstractController
             $panier->setCreatedAt(new \DateTime());
             $em->persist($panier);
         }
+
         // On parcourt toutes les lignes du panier (PanierProduit).
-        // Si la ligne correspond déjà au produit (===) → on incrémente la quantité.
-        // Flush enregistre tout en base et on redirige vers la page du panier àprès avoir ajouté le produit
+        // Si la ligne correspond déjà au produit ET à la même taille → on incrémente la quantité.
+        // Flush enregistre tout en base et on redirige vers la page du panier après avoir ajouté le produit
         foreach ($panier->getPanierProduits() as $ligne) {
-            if ($ligne->getProduit() === $produit) {
+            if ($ligne->getProduit() === $produit && $ligne->getTaille() === $taille) {
                 $ligne->setQuantite($ligne->getQuantite() + 1);
                 $em->flush();
                 return $this->redirectToRoute('app_panier_index');
             }
         }
-        // Si le produit n’existe pas encore dans le panier, On crée une nouvelle ligne de panier avec ce produit.
-        // On lie la ligne au panier (setPanier) et au produit (setProduit). On met la quantité à 1.
-        // persist + flush → enregistre en base. Enfin, on redirige vers la page du panier.
+
+        // Si le produit n'existe pas encore dans le panier avec cette taille, on crée une nouvelle ligne.
+        // On lie la ligne au panier (setPanier), au produit (setProduit) et on enregistre la taille.
+        // On met la quantité à 1. persist + flush → enregistre en base.
+        // Enfin, on redirige vers la page du panier.
         $ligne = new PanierProduit();
         $ligne->setPanier($panier);
         $ligne->setProduit($produit);
         $ligne->setQuantite(1);
+        $ligne->setTaille($taille);
 
         $em->persist($ligne);
         $em->flush();
@@ -109,32 +116,14 @@ final class PanierController extends AbstractController
         ]);
     }
 
-    // #[Route('/{id}/edit', name: 'app_panier_edit', methods: ['GET', 'POST'])]
-    // public function edit(Request $request, Panier $panier, EntityManagerInterface $entityManager): Response
-    // {
-    //     $form = $this->createForm(PanierType::class, $panier);
-    //     $form->handleRequest($request);
+    #[Route('/supprimer/{id}', name: 'panier_supprimer', methods: ['POST'])]
+    public function supprimer(PanierProduit $panierProduit, Request $request, EntityManagerInterface $em): Response
+    {
+        if ($this->isCsrfTokenValid('supprimer' . $panierProduit->getId(), $request->request->get('_token'))) {
+            $em->remove($panierProduit);
+            $em->flush();
+        }
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->flush();
-
-    //         return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
-    //     }
-
-    //     return $this->render('panier/edit.html.twig', [
-    //         'panier' => $panier,
-    //         'form' => $form,
-    //     ]);
-    // }
-
-    // #[Route('/{id}', name: 'app_panier_delete', methods: ['POST'])]
-    // public function delete(Request $request, Panier $panier, EntityManagerInterface $entityManager): Response
-    // {
-    //     if ($this->isCsrfTokenValid('delete'.$panier->getId(), $request->getPayload()->getString('_token'))) {
-    //         $entityManager->remove($panier);
-    //         $entityManager->flush();
-    //     }
-
-    //     return $this->redirectToRoute('app_panier_index', [], Response::HTTP_SEE_OTHER);
-    // }
+        return $this->redirectToRoute('app_panier_index');
+    }
 }

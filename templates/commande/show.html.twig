@@ -6,10 +6,10 @@
 {% block body %}
 	<h1>Commande #{{ commande.id }}</h1>
 
-{% for message in app.flashes ("success") %}
+	{% for message in app.flashes ("success") %}
 		<div class="flash-success">
-		{{message}}
-	{% endfor %}
+			{{message}}
+		{% endfor %}
 	</div>
 
 	<p>
@@ -20,6 +20,7 @@
 		<thead>
 			<tr>
 				<th>Produit</th>
+				<th>Taille</th>
 				<th>Quantité</th>
 				<th>Prix unitaire (€)</th>
 				<th>Total produit (€)</th>
@@ -32,13 +33,14 @@
 				{% set totalCommande = totalCommande + totalProduit %}
 				<tr>
 					<td>{{ cp.produit.nom }}</td>
+					<td>{{ cp.taille ?? '-' }}</td>
 					<td>{{ cp.quantite }}</td>
 					<td>{{ cp.prixUnitaire }}</td>
 					<td>{{ totalProduit }}</td>
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="4">Aucun produit commandé</td>
+					<td colspan="5">Aucun produit commandé</td>
 				</tr>
 			{% endfor %}
 		</tbody>
@@ -55,7 +57,7 @@
 	{% if is_granted('ROLE_ADMIN') %}
 		<a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn-dark">Editer la commande</a>
 	{% endif %}
-    
+
 	{% if is_granted('ROLE_ADMIN') %}
 		{{ include('commande/_delete_form.html.twig') }}
 	{% endif %}

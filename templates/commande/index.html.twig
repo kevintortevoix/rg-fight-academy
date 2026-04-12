@@ -4,13 +4,13 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Commande index</h1>
+	<h1>Mes commandes</h1>
 
 	<table class="table">
 		<thead>
 			<tr>
 				<th>Id</th>
-				<th>DateCommande</th>
+				<th>Date de la commande</th>
 				<th>Statut</th>
 				<th>actions</th>
 			</tr>
@@ -22,9 +22,9 @@
 					<td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d') : '' }}</td>
 					<td>{{ commande.statut }}</td>
 					<td>
-						<a href="{{ path('app_commande_show', {'id': commande.id}) }}">Voir la commande</a>
+						<a href="{{ path('app_commande_show', {'id': commande.id}) }}" class="btn-dark">Voir la commande</a>
 						{% if is_granted('ROLE_ADMIN') %}
-							<a href="{{ path('app_commande_edit', {'id': commande.id}) }}">edit</a>
+							<a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn-dark">edit</a>
 						{% endif %}
 					</td>
 				</tr>

@@ -27,6 +27,9 @@ class CommandeProduit
     #[ORM\JoinColumn(nullable: false)]
     private ?Produit $produit = null;
 
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $taille = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -84,4 +87,16 @@ class CommandeProduit
 {
     return $this->produit->getNom() . ' x ' . $this->quantite;
 }
+
+    public function getTaille(): ?string
+    {
+        return $this->taille;
+    }
+
+    public function setTaille(?string $taille): static
+    {
+        $this->taille = $taille;
+
+        return $this;
+    }
 }

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes réservations{% endblock %}
+
+{% block body %}
+<div class="reservations-container">
+    <h2>Mes réservations</h2>
+
+    <div class="reservations-grid">
+        {% for reservation in reservations %}
+            <div class="reservation-card">
+                <div class="reservation-card-header">
+                    {{ reservation.cours.nom }}
+                </div>
+                <div class="reservation-card-body">
+                    <p><span class="label">Jour :</span> {{ reservation.jourCours }}</p>
+                    <p><span class="label">Date :</span> {{ reservation.dateCours }}</p>
+                    <p><span class="label">Horaire :</span> {{ reservation.heureDebutCours }} - {{ reservation.heureFinCours }}</p>
+                </div>
+                <div class="reservation-card-footer">
+                    <span class="statut">{{ reservation.statut }}</span>
+                    <form method="post" action="{{ path('app_reservation_delete', { id: reservation.id }) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.id) }}">
+                        <button type="submit" class="btn-annuler">Annuler</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <p class="no-reservation">Vous n'avez aucune réservation.</p>
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('profil') }}" class="btn-retour">Retour au profil</a>
+</div>
+{% endblock %}

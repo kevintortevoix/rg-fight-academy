@@ -43,7 +43,7 @@ final class ProduitController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[IsGranted('ROLE_ADMIN')]
+    
     #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
     {

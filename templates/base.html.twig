@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="turbo-prefetch" content="false">
 		<title>
 			{% block title %}{% endblock %}
 		</title>
@@ -20,15 +21,16 @@
 		<header>
 			<nav class="navbar" id="main-navbar">
 				<div class="navbar-container">
+					<div class="nav-button">
+						<img src="{{ asset('uploads/images/bars-solid.svg') }}" alt="Logo Menu Burger">
+					</div>
+					<a href="/" class="nav-logo"><img src="{{ asset('uploads/images/Logo Noir RG Fight Academy.jpg') }}" alt="Logo RG Fight Academy"></a>
 					<div class="nav-button-basket">
 						<a href="/panier">
 							<img src="{{ asset('uploads/images/basket-shopping-solid.svg') }}" alt="Logo Panier">
 						</a>
 					</div>
-					<a href="/" class="nav-logo"><img src="{{ asset('uploads/images/Logo Noir RG Fight Academy.jpg') }}" alt="Logo RG Fight Academy"></a>
-					<div class="nav-button">
-						<img src="{{ asset('uploads/images/bars-solid.svg') }}" alt="Logo Menu Burger">
-					</div>
+					
 
 					<ul class="nav-menu">
 						{% if app.user %}

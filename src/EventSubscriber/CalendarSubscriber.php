@@ -35,13 +35,13 @@ class CalendarSubscriber implements EventSubscriberInterface
         foreach ($cours as $cours) {
             $jourEn = $jours[$cours->getJour()];
 
-            $debut = new \DateTime($jourEn . ' this week');
+            $debut = new \DateTime('this ' . $jourEn);
             $debut->setTime(
                 $cours->getHeureDebut()->format('H'),
                 $cours->getHeureDebut()->format('i')
             );
 
-            $fin = new \DateTime($jourEn . ' this week');
+            $fin = new \DateTime('this ' . $jourEn);
             $fin->setTime(
                 $cours->getHeureFin()->format('H'),
                 $cours->getHeureFin()->format('i')

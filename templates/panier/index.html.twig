@@ -4,7 +4,6 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Panier index</h1>
 
 	<h1>Mon panier</h1>
 
@@ -19,7 +18,9 @@
 					<th>Produit</th>
 					<th>Prix</th>
 					<th>Quantité</th>
+					<th>Taille</th>
 					<th>Total ligne</th>
+					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -33,15 +34,21 @@
 						<td>{{ ligne.produit.nom }}</td>
 						<td>{{ ligne.produit.prix }}€</td>
 						<td>{{ ligne.quantite }}</td>
+						<td>{{ ligne.taille }}</td>
 						<td>{{ totalLigne }}€</td>
+						<td>
+							<form method="post" action="{{ path('panier_supprimer', {id: ligne.id}) }}">
+								<input type="hidden" name="_token" value="{{ csrf_token('supprimer' ~ ligne.id) }}">
+								<button type="submit" class="btn-annuler">Supprimer</button>
+							</form>
+						</td>
 					</tr>
 				{% endfor %}
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="5" style="text-align:center; font-weight:bold;">Total du panier</td>
-					<td style="font-weight:bold;">{{ total }}
-						€</td>
+					<td colspan="7" style="text-align:center; font-weight:bold;">Total du panier</td>
+					<td style="font-weight:bold;">{{ total }}€</td>
 				</tr>
 			</tfoot>
 		</table>

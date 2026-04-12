@@ -1,38 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produit{% endblock %}
+{% block title %}{{ produit.nom }}{% endblock %}
 
 {% block body %}
-    <h1>Produit</h1>
+<div class="produit-show">
+    <div class="card">
+        <img src="{{ asset('uploads/images/' ~ produit.image) }}" alt="{{ produit.nom }}">
+        <h3>{{ produit.nom }}</h3>
+        <p>{{ produit.prix }} €</p>
+        <p>{{ produit.description }}</p>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ produit.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ produit.nom }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ produit.description }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ produit.prix }}</td>
-            </tr>
-            <tr>
-                <th>Stock</th>
-                <td>{{ produit.stock }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <form method="post" action="{{ path('panier_ajouter', {id: produit.id}) }}">
+            <label for="taille">Choisir une taille :</label>
+            <select name="taille" id="taille" required>
+                <option value="">-- Sélectionner --</option>
+                {% for taille in produit.produitTailles %}
+                    <option value="{{ taille.taille }}" {% if taille.stock == 0 %}disabled{% endif %}>
+                        {{ taille.taille }} {% if taille.stock == 0 %}(Rupture de stock){% endif %}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn-dark">Ajouter au panier</button>
+        </form>
 
-    <a href="{{ path('app_produit_index') }}">back to list</a>
-
-    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
-
-    {{ include('produit/_delete_form.html.twig') }}
+        <a href="{{ path('app_produit_index') }}" class="btn-dark">Retour à la boutique</a>
+    </div>
+</div>
 {% endblock %}

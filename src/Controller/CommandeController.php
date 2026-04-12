@@ -115,6 +115,7 @@ final class CommandeController extends AbstractController
             $commandeProduit->setProduit($produitPanier->getProduit());
             $commandeProduit->setQuantite($quantite);
             $commandeProduit->setPrixUnitaire($prix);
+            $commandeProduit->setTaille($produitPanier->getTaille());
 
             // Persister la ligne en base
             $entityManager->persist($commandeProduit);

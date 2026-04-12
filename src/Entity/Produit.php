@@ -29,9 +29,6 @@ class Produit
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?float $prix = null;
 
-    #[ORM\Column]
-    private ?int $stock = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
@@ -47,6 +44,12 @@ class Produit
     #[ORM\OneToMany(targetEntity: CommandeProduit::class, mappedBy: 'produit')]
     private Collection $commandeProduits;
 
+    /**
+     * @var Collection<int, ProduitTaille>
+     */
+    #[ORM\OneToMany(targetEntity: ProduitTaille::class, mappedBy: 'produit')]
+    private Collection $produitTailles;
+
     // -------------------------------------------------------------------------
     // Constructeur
     // -------------------------------------------------------------------------
@@ -55,6 +58,7 @@ class Produit
     {
         $this->panierProduits   = new ArrayCollection();
         $this->commandeProduits = new ArrayCollection();
+        $this->produitTailles = new ArrayCollection();
     }
 
     // -------------------------------------------------------------------------
@@ -102,17 +106,6 @@ class Produit
         return $this;
     }
 
-    public function getStock(): ?int
-    {
-        return $this->stock;
-    }
-
-    public function setStock(int $stock): static
-    {
-        $this->stock = $stock;
-
-        return $this;
-    }
 
     public function getImage(): ?string
     {
@@ -199,4 +192,39 @@ class Produit
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, ProduitTaille>
+     */
+    public function getProduitTailles(): Collection
+    {
+        return $this->produitTailles;
+    }
+
+    public function addProduitTaille(ProduitTaille $produitTaille): static
+    {
+        if (!$this->produitTailles->contains($produitTaille)) {
+            $this->produitTailles->add($produitTaille);
+            $produitTaille->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduitTaille(ProduitTaille $produitTaille): static
+    {
+        if ($this->produitTailles->removeElement($produitTaille)) {
+            // set the owning side to null (unless already changed)
+            if ($produitTaille->getProduit() === $this) {
+                $produitTaille->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+{
+    return $this->nom ?? '';
+}
 }
