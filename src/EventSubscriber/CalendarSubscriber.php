@@ -49,7 +49,7 @@ class CalendarSubscriber implements EventSubscriberInterface
 
 
             $couleurs = [
-                "JJB Baby's 3-6 ans"    => '#d1d5db',  // blanche — mais invisible sur fond clair !
+                "JJB Baby's 3-6 ans"    => '#d1d5db',  // gris 
                 "JJB Kid's 6-15 ans"    => '#3b82f6',  // bleue
                 "Grappling Adultes"     => '#9333ea',  // violette
                 "Préparation Physique"  => '#92400e',  // marron

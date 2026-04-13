@@ -24,7 +24,6 @@ class CoursCrudController extends AbstractCrudController
             TextField::new('jour', 'Jour'),
             TimeField::new('heureDebut', 'Heure de début'),
             TimeField::new('heureFin', 'Heure de fin'),
-            IntegerField::new('nombreReservations', 'Participants')->onlyOnIndex(),
         ];
     }
 }

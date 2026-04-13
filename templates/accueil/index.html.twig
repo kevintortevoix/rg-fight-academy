@@ -14,13 +14,13 @@
 
 		<p>
 			Notre mission est d’offrir un cadre structuré, sécurisé et bienveillant, accessible dès l’âge de 3 ans.
-						        À travers la pratique du Jiu-Jitsu Brésilien, nous accompagnons chaque élève dans le développement de la confiance en soi,
-						        de la discipline et du respect.
+									        À travers la pratique du Jiu-Jitsu Brésilien, nous accompagnons chaque élève dans le développement de la confiance en soi,
+									        de la discipline et du respect.
 		</p>
 
 		<p>
 			L’académie s’engage également à contribuer activement à la vie locale et à promouvoir une éducation sportive
-						        fondée sur la sécurité, la pédagogie et des valeurs éducatives fortes.
+									        fondée sur la sécurité, la pédagogie et des valeurs éducatives fortes.
 		</p>
 	</section>
 
@@ -30,7 +30,7 @@
 
 		<p>
 			Rejoignez-nous pour un cours d'essai gratuit et découvrez pourquoi le Jiu-Jitsu Brésilien
-						        est l'un des arts martiaux les plus efficaces au monde.
+									        est l'un des arts martiaux les plus efficaces au monde.
 		</p>
 
 		<div class="about-buttons">
@@ -45,7 +45,8 @@
 
 	<section class="about-planning" id="planning">
 		<h2>Notre Planning</h2>
-		<p>Pour réservez votre cours, cliquez sur le cours qui vous interesse !</p> <br>
+		<p>Pour réservez votre cours, cliquez sur le cours qui vous interesse !</p>
+		<br>
 		<div id="calendar-holder"></div>
 
 
@@ -65,7 +66,7 @@
 			<br>
 		</p>
 		<br>
-<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d695.9799103234359!2d5.109814269613319!3d45.752756933956555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f4c99e3137294b%3A0x9f28b11533cba1a4!2s37%20Pl.%20Jean%20Moulin%2C%2038280%20Janneyrias!5e0!3m2!1sfr!2sfr!4v1776023039669!5m2!1sfr!2sfr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>	
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d695.9799103234359!2d5.109814269613319!3d45.752756933956555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f4c99e3137294b%3A0x9f28b11533cba1a4!2s37%20Pl.%20Jean%20Moulin%2C%2038280%20Janneyrias!5e0!3m2!1sfr!2sfr!4v1776023039669!5m2!1sfr!2sfr" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 	</section>
 
 {% endblock %}
@@ -81,7 +82,9 @@ initialView: window.innerWidth < 768 ? 'listWeek' : 'timeGridWeek',
 locale: 'fr',
 timeZone: 'Europe/Paris',
 weekends: false,
-dayHeaderFormat: { weekday: 'long' },
+dayHeaderFormat: {
+weekday: 'long'
+},
 headerToolbar: {
 left: '',
 center: 'title',
@@ -91,7 +94,7 @@ height: 'auto',
 allDaySlot: false,
 slotMinTime: '12:00:00',
 slotMaxTime: '21:00:00',
-expandRows: true, 
+expandRows: true,
 eventSources: [
 {
 url: '/fc-load-events',
