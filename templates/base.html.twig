@@ -71,52 +71,41 @@
 		{% block body %}{% endblock %}
 	</body>
 	<footer>
-		<img src="{{ asset('uploads/images/Logo Blanc RG Fight Academy.jpg')}}" alt="Logo RG Fight Academy" class="logo-footer">
-		<div>
-			<a href="{{ asset("/") }}">Accueil</a>
-		</div>
-		<div>
-			<a href="{{ asset("/cours") }}">Cours</a>
-		</div>
-		<div>
-			<a href="{{ asset("/tarifs") }}">Tarifs</a>
-		</div>
-		<div>
-			<a href="{{ asset("/contact") }}">Contact</a>
-		</div>
-		<div>
-			<a href="{{ asset("/boutique") }}">Boutique</a>
-		</div>
+    <img src="{{ asset('uploads/images/Logo Blanc RG Fight Academy.jpg')}}" alt="Logo RG Fight Academy" class="logo-footer">
 
-		<div>
-			<p>
-				02 00 00 00 00
-				<br>
-				Salle des Glycines
-				<br>
-				Route de Crémieu
-				<br>
-				38280 Janneyrias
-				<br>
-			</p>
+    <div class="footer-nav">
+        <div><a href="/">Accueil</a></div>
+        <div><a href="/cours">Cours</a></div>
+        <div><a href="/tarifs">Tarifs</a></div>
+        <div><a href="/contact">Contact</a></div>
+        <div><a href="/boutique">Boutique</a></div>
+    </div>
 
-			<p>Suivez-nous !</p>
+    <div class="footer-contact">
+        <p>
+            06 49 83 67 98<br>
+            Salle des Glycines<br>
+            37 place Jean Moulin<br>
+            38280 Janneyrias
+        </p>
+    </div>
 
-			<div class="social-links">
-				<a href="https://www.facebook.com/RGFightAcademy" target="_blank">
-					<img src="{{ asset('uploads/images/facebook_logo_2.svg') }}" alt="Facebook" width="25">
-				</a>
-				<a href="https://www.instagram.com/rg_fight_academy" target="_blank">
-					<img src="{{ asset('uploads/images/instagram_logo.svg') }}" alt="Instagram" width="25">
-				</a>
-				<a href="https://share.google/cV7k3gLxEOWMiNJpg" target="_blank">
-					<img src="{{ asset('uploads/images/google_logo.svg') }}" alt="Google" width="25">
-				</a>
-			</div>
+    <div class="footer-social-col">
+        <p>Suivez-nous !</p>
+        <div class="social-links">
+            <a href="https://www.facebook.com/RGFightAcademy" target="_blank">
+                <img src="{{ asset('uploads/images/facebook_logo_2.svg') }}" alt="Facebook" width="25">
+            </a>
+            <a href="https://www.instagram.com/rg_fight_academy" target="_blank">
+                <img src="{{ asset('uploads/images/instagram_logo.svg') }}" alt="Instagram" width="25">
+            </a>
+            <a href="https://share.google/cV7k3gLxEOWMiNJpg" target="_blank">
+                <img src="{{ asset('uploads/images/google_logo.svg') }}" alt="Google" width="25">
+            </a>
+        </div>
+    </div>
 
-			<hr class="separator">
-
-			<p>© 2026 RG FIGHT ACADEMY. Tous droits réservés.</p>
-		</div>
-	</footer>
+    <hr class="separator">
+    <p class="footer-copy">© 2026 RG FIGHT ACADEMY. Tous droits réservés.</p>
+</footer>
 </html>

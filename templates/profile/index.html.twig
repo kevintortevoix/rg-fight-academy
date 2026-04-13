@@ -3,15 +3,33 @@
 {% block title %}Mon Profil{% endblock %}
 
 {% block body %}
-<h1>Bonjour {{ user.prenom }} {{user.nom}}</h1>
+<div class="profil-container">
 
-<a class="btn-dark" href="/commande">Mes commandes</a>
+    <div class="profil-header">
+        <h1>{{ user.prenom }} {{ user.nom }}</h1>
+        <p class="profil-email">{{ user.email }}</p>
+    </div>
 
-<a class="btn-dark" href="/reservations">Mes reservations</a>
+    <div class="profil-grid">
 
-{% if is_granted('ROLE_ADMIN') %}
-<a class="btn-dark" href="/admin">Espace admin</a>
-{% endif %}
+        <a href="/commande" class="profil-card">
+            <span class="profil-card-label">Mes commandes</span>
+        </a>
 
-<a class="btn-dark" href="/logout">Déconnexion</a>
+        <a href="/reservations" class="profil-card">
+            <span class="profil-card-label">Mes réservations</span>
+        </a>
+
+        {% if is_granted('ROLE_ADMIN') %}
+        <a href="/admin" class="profil-card profil-card--admin">
+            <span class="profil-card-icon">⚙️</span>
+            <span class="profil-card-label">Espace admin</span>
+        </a>
+        {% endif %}
+
+    </div>
+
+    <a href="/logout" class="btn-dark">Déconnexion</a>
+
+</div>
 {% endblock %}

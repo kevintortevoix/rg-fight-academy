@@ -1,41 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande index
-{% endblock %}
+{% block title %}Mes commandes{% endblock %}
 
 {% block body %}
-	<h1>Mes commandes</h1>
+<div class="reservations-container">
+    <h2>Mes commandes</h2>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Date de la commande</th>
-				<th>Statut</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for commande in commandes %}
-				<tr>
-					<td>{{ commande.id }}</td>
-					<td>{{ commande.dateCommande ? commande.dateCommande|date('Y-m-d') : '' }}</td>
-					<td>{{ commande.statut }}</td>
-					<td>
-						<a href="{{ path('app_commande_show', {'id': commande.id}) }}" class="btn-dark">Voir la commande</a>
-						{% if is_granted('ROLE_ADMIN') %}
-							<a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn-dark">edit</a>
-						{% endif %}
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="4">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
-	{% if is_granted('ROLE_ADMIN') %}
-		<a href="{{ path('app_commande_new') }}">Create new</a>
-	{% endif %}
+    <div class="reservations-grid">
+        {% for commande in commandes %}
+            <div class="reservation-card">
+                <div class="reservation-card-header">
+                    Commande #{{ commande.id }}
+                </div>
+                <div class="reservation-card-body">
+                    <p>
+                        <span class="label">Date :</span>
+                        {{ commande.dateCommande ? commande.dateCommande|date('d/m/Y') : 'Non définie' }}
+                    </p>
+                    <p>
+                        <span class="label">Statut :</span>
+                        {{ commande.statut }}
+                    </p>
+                </div>
+                <div class="reservation-card-footer">
+                    <a href="{{ path('app_commande_show', {'id': commande.id}) }}" class="btn-dark">Voir la commande</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_commande_edit', {'id': commande.id}) }}" class="btn-dark">Modifier</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <p class="no-reservation">Vous n'avez aucune commande.</p>
+        {% endfor %}
+    </div>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_commande_new') }}" class="btn-retour">Créer une commande</a>
+    {% endif %}
+</div>
 {% endblock %}

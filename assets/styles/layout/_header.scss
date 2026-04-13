@@ -39,13 +39,13 @@ body.menu-open {
     }
 
     .nav-logo img {
-        width: 150px;
+        width: 50px;
         display: inline-block;
     }
 
     .nav-menu {
         position: fixed;
-        top: 100px;
+        top: 68px;
         left: 0;
         right: 0;
         background-color: black;
@@ -89,4 +89,16 @@ body.menu-open {
     width: 100%;
     max-height: 400px;
     object-fit: cover;
+}
+
+@media (min-width: 769px) {
+  .navbar .nav-logo img{
+    width: 150px;
+  }  
+  .navbar .nav-menu{
+    top: 150px;
+  }
+  .navbar .nav-menu .nav-item{
+    padding: 2.05rem;
+  }
 }
