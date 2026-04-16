@@ -32,8 +32,6 @@ class CommandeCrudController extends AbstractCrudController
                 "Retrait et paiment au dojo"  => "Retrait et paiement au dojo",
             ]),
             AssociationField::new('commandeProduits', 'Produits')
-            
-            // TextEditorField::new('description'),
         ];
     }
 }

@@ -32,8 +32,6 @@ final class CommandeController extends AbstractController
         ]);
     }
 
-
-
     // route sur /valider en methode POST
 
     /* 

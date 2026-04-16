@@ -46,7 +46,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('Cours', 'fas fa-dumbbell', "admin_cours_index");
         yield MenuItem::linkToRoute('Réservations', 'fas fa-calendar', "admin_reservation_index");
         yield MenuItem::linkToRoute('Retour au site', 'fas fa-home', "app_accueil");
-
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }

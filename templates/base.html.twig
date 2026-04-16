@@ -5,8 +5,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="turbo-prefetch" content="false">
 		<title>
-			{% block title %}{% endblock %}
+			{% block title %}Base{% endblock %}
 		</title>
+
+		{% block meta_description %}
+		<meta name="description" content="RG Fight Academy : Ecole de Jiu-Jitsu Brésilien à Janneyrias. 
+		Cours pour enfants et adultes, 
+		boutique et réservations en ligne."
+		{% endblock %}>
+
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>"> {% block stylesheets %}{% endblock %}
 		<link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
 		{% block javascripts %}
@@ -67,7 +74,7 @@
 				</div>
 			</nav>
 		</header>
-		<div class="header_img"><img src="{{ asset('uploads/images/header-photo.jpg') }}" alt=""></div>
+		<div class="header_img"><img src="{{ asset('uploads/images/header-photo.jpg') }}" alt=" Deux jiujitsuka"></div>
 		{% block body %}{% endblock %}
 	</body>
 	<footer>
