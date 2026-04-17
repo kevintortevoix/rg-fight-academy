@@ -87,6 +87,11 @@ footer {
     margin: 8px 0;
 }
 
+.legal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 .footer-copy {
     text-align: center;
     color: #888;
@@ -164,6 +169,15 @@ footer {
     .separator {
         margin: 0;
     }
+
+    .legal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    gap: 1rem;
+    
+}
 
     .footer-copy {
         padding-bottom: 24px;

@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Politique de confidentialité — RG Fight Academy{% endblock %}
+
+{% block body %}
+
+<section class="pageHero">
+    <div class="pageHero__breadcrumb">
+        <a href="/">Accueil</a>
+        <span>/</span>
+        <p>Politique de confidentialité</p>
+    </div>
+    <div class="pageHero__title">
+        <h1>Politique de confidentialité</h1>
+    </div>
+</section>
+
+<section class="privacy">
+
+    <div class="privacy__block">
+        <h2>1. Responsable du traitement</h2>
+        <p>L'association RG Fight Academy est responsable du traitement des données personnelles collectées via ce site web.</p>
+    </div>
+
+    <div class="privacy__block">
+        <h2>2. Données collectées</h2>
+        <p>Dans le cadre de l'utilisation du site RG Fight Academy, les données suivantes sont collectées :</p>
+        
+           <p> Adresse e-mail et mot de passe lors de la création d'un compte utilisateur.</p>
+           <p> Nom, prénom et informations de profil lors de l'inscription.</p>
+            <p>Détails des cours choisis, dates et montants lors d'une réservation de séance.</p>
+            <p>Articles choisis et adresse de livraison lors d'un achat sur la boutique.</p>
+            <p>Adresse e-mail, sujet et message lors de l'envoi d'un formulaire de contact.</p>
+        
+    </div>
+
+    <div class="privacy__block">
+        <h2>3. Finalité du traitement</h2>
+        <p>Les données collectées sont utilisées exclusivement pour le bon fonctionnement du club, notamment pour la gestion des réservations de cours, le suivi des commandes boutique et la communication avec les adhérents. Elles ne sont en aucun cas transmises à des tiers ou vendues.</p>
+    </div>
+
+    <div class="privacy__block">
+        <h2>4. Sécurité des données</h2>
+        <p>La sécurité est une priorité : les mots de passe des utilisateurs sont hashés (cryptés) via les algorithmes natifs de Symfony et ne sont jamais stockés en clair. L'accès aux données personnelles est protégé par le système de rôles et d'authentification du site.</p>
+    </div>
+
+    <div class="privacy__block">
+        <h2>5. Durée de conservation</h2>
+        <p>Les données personnelles sont conservées pendant toute la durée de l'activité de l'utilisateur sur le site. Dans le cadre de ce projet pédagogique, toutes les données fictives seront supprimées après l'examen de certification.</p>
+    </div>
+
+    <div class="privacy__block">
+        <h2>6. Droits des utilisateurs</h2>
+        <p>Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles. Pour exercer ces droits, vous pouvez nous contacter via l'adresse e-mail : rgfight@outlook.com.</p>
+    </div>
+
+    <div class="privacy__block">
+        <h2>7. Cookies</h2>
+        <p>Le site RG Fight Academy utilise uniquement des cookies de session strictement nécessaires à l'authentification et au maintien du panier d'achat. Aucun cookie tiers à but publicitaire n'est déposé sur votre navigateur.</p>
+    </div>
+
+</section>
+
+{% endblock %}

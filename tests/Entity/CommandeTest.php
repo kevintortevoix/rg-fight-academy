@@ -22,7 +22,7 @@ class CommandeTest extends TestCase
         $this->assertSame(49.99, $commande->getTotal());
     }
 
-    public function testGetNomUtilisateurRetourneNullSiAucunUtilisateur(): void
+    public function testGetNomUtilisateur(): void
     {
         $commande = new Commande();
         $this->assertNull($commande->getNomUtilisateur());

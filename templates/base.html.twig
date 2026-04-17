@@ -12,7 +12,7 @@
 		<meta name="description" content="RG Fight Academy : Ecole de Jiu-Jitsu Brésilien à Janneyrias. 
 		Cours pour enfants et adultes, 
 		boutique et réservations en ligne."
-		{% endblock %}>
+		{% endblock %}
 
 		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>"> {% block stylesheets %}{% endblock %}
 		<link rel="stylesheet" href="{{ asset('styles/app.scss') }}">
@@ -113,6 +113,13 @@
     </div>
 
     <hr class="separator">
+
+	<div class="legal">
+	<a  href="{{ path('app_mentions_legales') }}">Mentions Légales</a>
+	<a  href="{{ path('app_politique_confidentialite') }}">Politique de Confidentialité</a> 
+	</div> 
+	
     <p class="footer-copy">© 2026 RG FIGHT ACADEMY. Tous droits réservés.</p>
+	
 </footer>
 </html>
